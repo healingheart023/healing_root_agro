@@ -1,111 +1,486 @@
-<section id="shop">
-    <h2>Shop Our Products</h2>
-    <div class="products-grid">
-        <!-- Product 1 -->
-        <div class="product-card">
-            <img src="images/cassava.JPG" alt="Cassava Stems">
-            <h3>tme 419 Cassava Stems</h3>
-            <p>₦1000 per bundle</p>
-            <label>Quantity:
-                <input type="number" min="1" value="1" class="qty" data-name="tme 419 Cassava Stems" data-price="1000">
-            </label>
-            <button class="add-to-cart" data-name="Cassava Stems" data-price="1000">Add to Cart 🛒</button>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Healing Root Agro Ventures — Shop</title>
+<style>
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f6f6f6;color:#222;line-height:1.5}
+header{background:#2e7d32;color:#fff;padding:16px 12px;position:sticky;top:0;z-index:999}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:800;font-size:18px}
+nav a{color:#fff;margin-left:14px;font-weight:600;text-decoration:none}
+.container{max-width:1200px;margin:30px auto;padding:0 16px}
 
-        <!-- Product 2 -->
-        <div class="product-card">
-            <img src="images/plantain.JPG" alt="Hybrid Plantain Suckers">
-            <h3>Hybrid giant Plantain Suckers</h3>
-            <p>₦350 per suckers</p>
-            <label>Quantity:
-                <input type="number" min="1" value="1" class="qty" data-name="Plantain Suckers" data-price="350">
-            </label>
-            <button class="add-to-cart" data-name="Plantain Suckers" data-price="350">Add to Cart 🛒</button>
-        </div>
+/* Controls Row */
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:20px}
+.left-controls{display:flex;gap:12px;align-items:center}
+.search {padding:8px 12px;border-radius:8px;border:1px solid #ccc;width:260px}
+.category-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.cat-btn{background:#fff;border:1px solid #cfcfcf;padding:8px 12px;border-radius:8px;cursor:pointer}
+.cat-btn.active{background:#2e7d32;color:#fff;border-color:#2e7d32}
 
-        <!-- Product 3 -->
-        <div class="product-card">
-            <img src="images/oilpalm.jpg" alt="Tenera Oil Palm Seedlings">
-            <h3>Tenera Oil Palm Seedlings</h3>
-            <p>₦1000 per seedling</p>
-            <label>Quantity:
-                <input type="number" min="1" value="1" class="qty" data-name="Oil Palm Seedlings" data-price="1000">
-            </label>
-            <button class="add-to-cart" data-name="Oil Palm Seedlings" data-price="1000">Add to Cart 🛒</button>
-        </div>
+/* Products grid */
+.products-grid{display:flex;flex-wrap:wrap;gap:18px;justify-content:center}
+.product-card{background:#fff;border-radius:12px;padding:12px;text-align:center;width:200px;box-shadow:0 6px 16px rgba(0,0,0,0.08);transition:transform .18s}
+.product-card:hover{transform:translateY(-6px)}
+.product-card img{width:160px;height:110px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+.product-card h3{font-size:15px;color:#2e7d32;margin:6px 0}
+.product-card p.price{font-weight:700;margin:6px 0;color:#333}
+.product-card .meta{font-size:13px;color:#666;margin-bottom:8px}
+.qty{width:64px;padding:6px;border-radius:6px;border:1px solid #ddd;margin:6px 0}
+
+/* Add to cart / small buttons */
+.add-to-cart, .buy-now{display:block;width:100%;padding:8px 10px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+.add-to-cart{background:linear-gradient(45deg,#43a047,#66bb6a);color:#fff;margin-bottom:6px}
+.buy-now{background:#1e88e5;color:#fff}
+
+/* Cart box */
+#cart{background:#fff;padding:14px;border-radius:10px;max-width:520px;margin:20px auto;box-shadow:0 6px 16px rgba(0,0,0,0.08)}
+#cart ul{list-style:none;padding-left:0}
+.cart-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee}
+.cart-actions{display:flex;gap:10px;justify-content:center;margin-top:12px}
+
+/* Checkout buttons */
+.checkout-btn{background:#2e7d32;color:#fff;padding:12px 18px;border:none;border-radius:10px;font-weight:800;cursor:pointer}
+.pay-btn{background:#e67e22;color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer}
+
+/* Testimonials / About */
+.testimonial-wrap{max-width:800px;margin:30px auto;padding:18px;background:#e8f5e9;border-radius:12px;text-align:center;box-shadow:0 6px 16px rgba(0,0,0,0.04)}
+.about{max-width:900px;margin:30px auto;text-align:center;padding:0 16px}
+
+/* Floating buttons */
+.floating-whatsapp,.floating-call{position:fixed;bottom:20px;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;z-index:999}
+.floating-whatsapp{right:90px;background:#25D366}
+.floating-call{right:20px;background:#1e88e5}
+
+/* Responsive */
+@media(max-width:820px){
+  .header-inner{flex-direction:column;gap:8px;align-items:flex-start}
+  .search{width:100%}
+  .controls{flex-direction:column;align-items:stretch}
+  .products-grid{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="brand">HEALING ROOT AGRO VENTURES</div>
+      <div style="font-size:12px;color:#c8e6c9">Growing qualities. Nurturing tomorrow</div>
+    </div>
+    <nav>
+      <a href="#products">Products</a>
+      <a href="#shop">Shop</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Controls: search + categories + cart summary -->
+  <div class="controls">
+    <div class="left-controls">
+      <input id="searchInput" class="search" placeholder="Search products — e.g. cassava, plantain">
+      <div class="category-buttons" id="categoryButtons">
+        <button class="cat-btn active" data-cat="all">All</button>
+        <button class="cat-btn" data-cat="stems">Stems</button>
+        <button class="cat-btn" data-cat="suckers">Suckers</button>
+        <button class="cat-btn" data-cat="seedlings">Seedlings</button>
+        <button class="cat-btn" data-cat="seeds">Seeds</button>
+      </div>
     </div>
 
-    <h3>Your Cart</h3>
-    <div id="cart">
-        <p>Your cart is empty.</p>
+    <div id="cartSummary" style="text-align:right">
+      <div style="background:#fff;padding:10px;border-radius:10px;box-shadow:0 6px 12px rgba(0,0,0,0.06)">
+        <div id="cartCount">Items: 0</div>
+        <div id="cartTotal">Total: ₦0</div>
+      </div>
     </div>
-    <button id="checkout" class="btn">Purchase via WhatsApp</button>
-</section>
+  </div>
 
+  <!-- PRODUCTS LIST (static cards, small images) -->
+  <section id="products">
+    <h2>Products</h2>
+    <div class="products-grid" id="productsGrid">
+
+      <!-- Example product structure (copy to add more) -->
+      <!-- 1 -->
+      <div class="product-card" data-name="TME419 Cassava Stems" data-price="1000" data-cat="stems">
+        <img src="images/cassava.JPG" alt="Cassava">
+        <h3>Cassava Stems</h3>
+        <div class="meta">TME419</div>
+        <div class="price">₦1000</div>
+      </div>
+
+      <!-- 2 -->
+      <div class="product-card" data-name="Hybrid Plantain Suckers" data-price="350" data-cat="suckers">
+        <img src="images/plantain.JPG" alt="Plantain">
+        <h3>Hybrid giant Plantain and banana Suckers</h3>
+        <div class="meta">Giant hybrid</div>
+        <div class="price">₦350</div>
+      </div>
+
+      <!-- 3 -->
+      <div class="product-card" data-name="Tenera Oil Palm Seedlings" data-price="1000" data-cat="seedlings">
+        <img src="images/oilpalm.JPG" alt="Oil Palm">
+        <h3>Tenera Oil Palm Seedlings</h3>
+        <div class="meta">Healthy seedlings</div>
+        <div class="price">₦1000</div>
+      </div>
+
+      <!-- 4 -->
+      <div class="product-card" data-name="Coconut & Pineapple Seedlings" data-price="1200" data-cat="seedlings">
+        <img src="images/coconut.JPG" alt="Coconut">
+        <h3>Coconut & Pineapple Seedlings</h3>
+        <div class="meta">Fruit seedlings</div>
+        <div class="price">₦1,200</div>
+      </div>
+
+      <!-- 5 -->
+      <div class="product-card" data-name="Okra & Vegetable Seeds" data-price="500" data-cat="seeds">
+        <img src="images/vegetables.jpg" alt="Vegetable Seeds">
+        <h3> Vegetable Seeds</h3>
+        <div class="meta">High germination</div>
+        <div class="price">₦</div>
+      </div>
+
+      <!-- 6 -->
+      <div class="product-card" data-name="NPK Fertilizers" data-price="65000" data-cat="fertilizer">
+        <img src="images/fertilizer.JPG" alt="Fertilizer">
+        <h3>NPK Fertilizers</h3>
+        <div class="meta">Quality blends</div>
+        <div class="price">₦65000</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SHOP area: quantity, add-to-cart, cart and checkout (WhatsApp + Paystack/Flutterwave placeholders) -->
+  <section id="shop" style="margin-top:34px">
+    <h2>Shop & Order Online</h2>
+
+    <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;justify-content:center">
+      <!-- product area (dynamically generated below) -->
+      <div style="flex:1;min-width:320px;max-width:720px">
+        <div class="products-grid" id="shopList">
+          <!-- JS will create cards with quantity & Add to Cart buttons here -->
+        </div>
+      </div>
+
+      <!-- Cart box -->
+      <div style="width:100%;max-width:420px">
+        <div id="cart">
+          <h3>Your Cart</h3>
+          <div id="cartContent"><p>Your cart is empty.</p></div>
+          <div class="cart-actions">
+            <button id="checkoutWhatsApp" class="checkout-btn">Checkout on WhatsApp</button>
+            <button id="checkoutPay" class="pay-btn">Pay Online</button>
+          </div>
+
+          <!-- Payment gateway chooser (toggle) -->
+          <div style="margin-top:12px;text-align:center;font-size:13px;color:#666">
+            You can pay via Online (Paystack / Flutterwave) OR confirm order via WhatsApp.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <h2>What customers say</h2>
+    <div class="testimonial-wrap" id="testimonialWrap">
+      <div class="testimonial active">
+        "Their cassava stems improved my harvest! Fast delivery and great support." — Moses
+      </div>
+      <div class="testimonial">
+        "Very reliable, seedlings were healthy and strong." — Grace
+      </div>
+    </div>
+  </section>
+
+  <!-- About & Contact -->
+  <section id="about" class="about">
+    <h2>About Us</h2>
+    <p>Healing Root Agro Ventures provides premium agricultural inputs, farm setup services and training to help farmers achieve maximum yield and sustainable production.</p>
+  </section>
+
+  <section id="contact" style="margin-bottom:80px">
+    <h2>Contact</h2>
+    <p style="text-align:center">Call: <a href="tel:+2348153729342">0815 372 9342</a> • WhatsApp: <a href="https://wa.me/2349138938301">0913 893 8301</a> • Email: <a href="mailto:olasuposegunvictor@gmail.com">olasuposegunvictor@gmail.com</a></p>
+  </section>
+
+</main>
+
+<!-- Floating buttons -->
+<a class="floating-whatsapp" href="https://wa.me/2349138938301" target="_blank" title="Chat on WhatsApp">💬</a>
+<a class="floating-call" href="tel:+2348153729342" title="Call us">📞</a>
+
+<!-- ====== SCRIPTS: product list, search, categories, cart, pay placeholders ====== -->
 <script>
-// Cart array
-let cart = [];
+/* ---------- DATA: products array (edit prices, names, images here) ---------- */
+const PRODUCTS = [
+  {id:1, name:'Cassava Stems', price:1500, img:'images/cassava.jpg', cat:'stems', note:'TME419 & TMS30572'},
+  {id:2, name:'Hybrid Plantain Suckers', price:2000, img:'images/plantain.jpg', cat:'suckers', note:'Giant hybrid'},
+  {id:3, name:'Tenera Oil Palm Seedlings', price:3500, img:'images/oilpalm.jpg', cat:'seedlings', note:'Healthy seedlings'},
+  {id:4, name:'Coconut & Pineapple Seedlings', price:1200, img:'images/coconut.jpg', cat:'seedlings', note:'Fruit seedlings'},
+  {id:5, name:'Okra & Vegetable Seeds', price:500, img:'images/vegetables.jpg', cat:'seeds', note:'High germination'},
+  {id:6, name:'NPK Fertilizers', price:8000, img:'images/fertilizer.jpg', cat:'fertilizer', note:'Quality blends'}
+];
 
-const cartDiv = document.getElementById('cart');
-const addButtons = document.querySelectorAll('.add-to-cart');
-const checkoutBtn = document.getElementById('checkout');
+/* ---------- Helpers ---------- */
+function formatN(n){ return '₦' + n.toLocaleString(); }
 
-// Add to Cart with quantity
-addButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const name = btn.dataset.name;
-        const price = parseInt(btn.dataset.price);
-        const qtyInput = btn.previousElementSibling.querySelector('input.qty');
-        const quantity = parseInt(qtyInput.value);
-
-        // Check if product is already in cart
-        const existing = cart.find(item => item.name === name);
-        if(existing){
-            existing.quantity += quantity;
-        } else {
-            cart.push({name, price, quantity});
-        }
-
-        updateCart();
-    });
+/* ---------- render products list (small cards) ---------- */
+const productsGrid = document.getElementById('productsGrid');
+PRODUCTS.forEach(p=>{
+  // already present in HTML, but keep if dynamic needed — skip to avoid duplicates
 });
 
-// Update Cart Display
-function updateCart(){
-    if(cart.length === 0){
-        cartDiv.innerHTML = "<p>Your cart is empty.</p>";
-        return;
-    }
+/* ---------- build shop list (with qty & add buttons) ---------- */
+const shopList = document.getElementById('shopList');
+PRODUCTS.forEach(p=>{
+  const div = document.createElement('div');
+  div.className = 'product-card';
+  div.innerHTML = `
+    <img src="${p.img}" alt="${p.name}">
+    <h3>${p.name}</h3>
+    <div class="meta">${p.note}</div>
+    <div class="price">${formatN(p.price)}</div>
+    Quantity: <input class="qty" type="number" min="1" value="1" data-id="${p.id}" style="margin:8px 0;">
+    <button class="add-to-cart" data-id="${p.id}" style="margin-top:6px">Add to Cart 🛒</button>
+    <button class="buy-now" data-id="${p.id}" style="margin-top:6px">Buy Now</button>
+  `;
+  shopList.appendChild(div);
+});
 
-    let html = "<ul>";
-    let total = 0;
-    cart.forEach((item,index)=>{
-        html += `<li>${item.name} - ₦${item.price} x ${item.quantity} = ₦${item.price * item.quantity} 
-        <button onclick="removeItem(${index})">Remove</button></li>`;
-        total += item.price * item.quantity;
-    });
-    html += `</ul><p><strong>Total: ₦${total}</strong></p>`;
-    cartDiv.innerHTML = html;
+/* ---------- CART ---------- */
+let cart = []; // {id, name, price, quantity}
+
+function findProduct(id){ return PRODUCTS.find(p=>p.id===id); }
+function updateCartDisplay(){
+  const cartContent = document.getElementById('cartContent');
+  const cartCount = document.getElementById('cartCount');
+  const cartTotal = document.getElementById('cartTotal');
+
+  if(cart.length === 0){
+    cartContent.innerHTML = '<p>Your cart is empty.</p>';
+    cartCount.innerText = 'Items: 0';
+    cartTotal.innerText = 'Total: ₦0';
+    return;
+  }
+  let html = '<ul>';
+  let total = 0;
+  cart.forEach((it, idx)=>{
+    const sub = it.price * it.quantity;
+    total += sub;
+    html += `<li class="cart-row">
+      <div>${it.name} × ${it.quantity}</div>
+      <div>₦${sub.toLocaleString()} &nbsp; <button onclick="removeItem(${idx})" style="background:#fff;border:1px solid #ddd;padding:4px;border-radius:6px;cursor:pointer">Remove</button></div>
+    </li>`;
+  });
+  html += `</ul><p style="text-align:right;font-weight:700">Total: ${formatN(total)}</p>`;
+  cartContent.innerHTML = html;
+  cartCount.innerText = 'Items: ' + cart.reduce((s,i)=>s+i.quantity,0);
+  cartTotal.innerText = 'Total: ' + formatN(total);
 }
 
-// Remove item from cart
 function removeItem(index){
-    cart.splice(index,1);
-    updateCart();
+  cart.splice(index,1);
+  updateCartDisplay();
 }
 
-// WhatsApp Checkout
-checkoutBtn.addEventListener('click',()=>{
-    if(cart.length === 0){ alert("Your cart is empty!"); return; }
+function addToCartById(id, quantity){
+  const p = findProduct(id);
+  if(!p) return;
+  const existing = cart.find(i=>i.id===id);
+  if(existing) existing.quantity += quantity;
+  else cart.push({id:p.id, name:p.name, price:p.price, quantity});
+  updateCartDisplay();
+}
 
-    let message = "Hello! I want to purchase:\n";
-    let total = 0;
-    cart.forEach(item=>{
-        message += `- ${item.name} x ${item.quantity} = ₦${item.price * item.quantity}\n`;
-        total += item.price * item.quantity;
-    });
-    message += `Total: ₦${total}`;
-    const url = `https://wa.me/2349138938301?text=${encodeURIComponent(message)}`;
-    window.open(url,'_blank');
+/* Attach events to dynamic add buttons */
+document.addEventListener('click', function(e){
+  if(e.target.classList.contains('add-to-cart')){
+    const id = parseInt(e.target.dataset.id);
+    // find qty input in parent
+    const qty = parseInt(e.target.parentElement.querySelector('.qty').value) || 1;
+    addToCartById(id, qty);
+  }
+  if(e.target.classList.contains('buy-now')){
+    const id = parseInt(e.target.dataset.id);
+    const qty = parseInt(e.target.parentElement.querySelector('.qty').value) || 1;
+    // build single-item checkout (WhatsApp)
+    const p = findProduct(id);
+    const text = `Hello! I want to buy: ${p.name} × ${qty} = ${formatN(p.price*qty)}`;
+    window.open(`https://wa.me/2349138938301?text=${encodeURIComponent(text)}`,'_blank');
+  }
 });
+
+/* ---------- Search & Categories ---------- */
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function(){
+  const q = this.value.trim().toLowerCase();
+  filterAndShow(q, getActiveCategory());
+});
+
+function getActiveCategory(){
+  const btns = document.querySelectorAll('.cat-btn');
+  for(const b of btns) if(b.classList.contains('active')) return b.dataset.cat;
+  return 'all';
+}
+
+function filterAndShow(query, category){
+  // filter product-card elements in #productsGrid
+  const cards = document.querySelectorAll('#productsGrid .product-card');
+  cards.forEach(c=>{
+    const name = (c.dataset.name || c.querySelector('h3').innerText).toLowerCase();
+    const cat = c.dataset.cat || '';
+    const matchesQuery = query === '' || name.includes(query);
+    const matchesCat = category === 'all' || cat === category;
+    c.style.display = (matchesQuery && matchesCat) ? '' : 'none';
+  });
+}
+
+/* category buttons */
+document.getElementById('categoryButtons').addEventListener('click', function(e){
+  if(e.target.classList.contains('cat-btn')){
+    document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    const cat = e.target.dataset.cat;
+    filterAndShow(searchInput.value.trim().toLowerCase(), cat);
+  }
+});
+
+/* ---------- Checkout (WhatsApp) ---------- */
+document.getElementById('checkoutWhatsApp').addEventListener('click', function(){
+  if(cart.length === 0) { alert('Your cart is empty'); return; }
+  let text = "Hello! I want to order:%0A";
+  let total = 0;
+  cart.forEach(it=>{
+    text += `- ${it.name} x ${it.quantity} = ${formatN(it.price * it.quantity)}%0A`;
+    total += it.price * it.quantity;
+  });
+  text += `%0ATotal = ${formatN(total)}`;
+  window.open(`https://wa.me/2349138938301?text=${text}`, '_blank');
+});
+
+/* ---------- Checkout (Pay Online) ---------- */
+document.getElementById('checkoutPay').addEventListener('click', function(){
+  if(cart.length === 0) { alert('Your cart is empty'); return; }
+  // Calculate total
+  let total = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
+  // Convert to kobo/ngn cents if required by gateway: Paystack expects amount in kobo (multiply by 100)
+  // Here we show a choice prompt to the user to choose gateway (simple)
+  const gw = prompt('Type PAYSTACK to pay with Paystack or FLUTTER to pay with Flutterwave (type exactly):', 'PAYSTACK');
+  if(gw === null) return;
+  if(gw.toUpperCase() === 'PAYSTACK'){
+    // PAYSTACK: Insert your PUBLIC KEY below and implement backend verification for production.
+    const paystackPublicKey = 'PAYSTACK_PUBLIC_KEY_HERE';
+    const email = prompt('Enter customer email for payment (used by gateway):', 'customer@example.com') || 'customer@example.com';
+    const handler = window.payWithPaystack || null;
+    if(!paystackPublicKey || paystackPublicKey.includes('PAYSTACK_PUBLIC_KEY_HERE')){
+      alert('Paystack public key not set. Edit HTML and replace PAYSTACK_PUBLIC_KEY_HERE with your public key.');
+      return;
+    }
+    // dynamic load paystack script then call
+    loadScript('https://js.paystack.co/v1/inline.js').then(()=>{
+      const handler = PaystackPop.setup({
+        key: paystackPublicKey,
+        email: email,
+        amount: total * 100, // kobo
+        currency: 'NGN',
+        ref: 'HRAV-'+Math.floor((Math.random()*1000000000)+1),
+        onClose: function(){ alert('Payment window closed'); },
+        callback: function(response){
+          alert('Payment successful. Reference: ' + response.reference + '. Please also send order details via WhatsApp.');
+          // After success, you must verify payment on the server with your secret key.
+        }
+      });
+      handler.openIframe();
+    }).catch(()=>alert('Failed to load Paystack script.'));
+  } else if(gw.toUpperCase() === 'FLUTTER'){
+    // FLUTTERWAVE: Insert your PUBLIC KEY below and implement backend verification for production.
+    const flutterPublicKey = 'FLW_PUBLIC_KEY_HERE';
+    if(!flutterPublicKey || flutterPublicKey.includes('FLW_PUBLIC_KEY_HERE')){
+      alert('Flutterwave public key not set. Edit HTML and replace FLW_PUBLIC_KEY_HERE with your public key.');
+      return;
+    }
+    loadScript('https://checkout.flutterwave.com/v3.js').then(()=>{
+      const txRef = 'HRAV-'+Math.floor((Math.random()*1000000000)+1);
+      FlutterwaveCheckout({
+        public_key: flutterPublicKey,
+        tx_ref: txRef,
+        amount: total,
+        currency: "NGN",
+        payment_options: "card, ussd, mobilemoney, banktransfer",
+        customer: {
+          email: "customer@example.com",
+          phone_number: "0000000000",
+          name: "Customer"
+        },
+        customizations: {
+          title: "Healing Root Agro Ventures",
+          description: "Order payment",
+        },
+        callback: function (data) {
+          alert("Payment complete! Transaction ref: " + data.transaction_id + ". Please confirm via WhatsApp.");
+        },
+        onclose: function() {
+          // close modal
+        }
+      });
+    }).catch(()=>alert('Failed to load Flutterwave script.'));
+  } else {
+    alert('Gateway choice not recognized. Type PAYSTACK or FLUTTER exactly.');
+  }
+});
+
+/* helper to load an external script */
+function loadScript(src){
+  return new Promise((resolve,reject)=>{
+    const s = document.createElement('script'); s.src = src; s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+/* ---------- init: create small product cards in #productsGrid from PRODUCTS array (for search & category) ---------- */
+(function initProductGrid(){
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = ''; // remove initial static ones (if any)
+  PRODUCTS.forEach(p=>{
+    const el = document.createElement('div');
+    el.className = 'product-card';
+    el.dataset.name = p.name.toLowerCase();
+    el.dataset.cat = p.cat;
+    el.innerHTML = `<img src="${p.img}" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <div class="meta">${p.note}</div>
+      <div class="price">${formatN(p.price)}</div>`;
+    grid.appendChild(el);
+  });
+  // also render a small clickable area to add to shopList if desired; shopList already has interactive cards
+})();
+
+/* ---------- Simple testimonials rotation ---------- */
+let tIndex=0;
+setInterval(()=> {
+  const t = document.querySelectorAll('.testimonial');
+  t.forEach(x=>x.classList.remove('active'));
+  tIndex = (tIndex+1) % t.length;
+  t[tIndex].classList.add('active');
+}, 4200);
+
+/* initial update */
+updateCartDisplay();
 </script>
+</body>
+</html>
