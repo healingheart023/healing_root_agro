@@ -159,7 +159,43 @@ nav a{color:#fff;margin-left:14px;font-weight:600;text-decoration:none}
         <div class="meta">Quality blends</div>
         <div class="price">₦65000</div>
       </div>
+<!-- NEW PRODUCTS: Hybrid Pineapple Sucker, Giant Hybrid Cocoa Seedlings, Hybrid Giant Banana Suckers -->
+<div class="products-grid">
 
+  <!-- 6: Hybrid Pineapple Sucker -->
+  <div class="product-card" data-name="Hybrid Pineapple Sucker" data-price="1800" data-cat="seedlings">
+    <img src="images/hybrid_pineapple.JPG" alt="Hybrid Pineapple Sucker">
+    <h3>Hybrid Pineapple Sucker</h3>
+    <div class="meta">Healthy fruit seedlings</div>
+    <div class="price">₦1,800</div>
+    Quantity: <input class="qty" type="number" min="1" value="1" data-id="101" style="margin:8px 0;">
+    <button class="add-to-cart" data-id="101" style="margin-top:6px">Add to Cart 🛒</button>
+    <button class="buy-now" data-id="101" style="margin-top:6px">Buy Now</button>
+  </div>
+
+  <!-- 7: Giant Hybrid Cocoa Seedlings -->
+  <div class="product-card" data-name="Giant Hybrid Cocoa Seedlings" data-price="2500" data-cat="seedlings">
+    <img src="images/giant_cocoa.JPG" alt="Giant Hybrid Cocoa Seedlings">
+    <h3>Giant Hybrid Cocoa Seedlings</h3>
+    <div class="meta">High yield cocoa seedlings</div>
+    <div class="price">₦2,500</div>
+    Quantity: <input class="qty" type="number" min="1" value="1" data-id="102" style="margin:8px 0;">
+    <button class="add-to-cart" data-id="102" style="margin-top:6px">Add to Cart 🛒</button>
+    <button class="buy-now" data-id="102" style="margin-top:6px">Buy Now</button>
+  </div>
+
+  <!-- 8: Hybrid Giant Banana Suckers -->
+  <div class="product-card" data-name="Hybrid Giant Banana Suckers" data-price="2000" data-cat="suckers">
+    <img src="images/giant_banana.JPG" alt="Hybrid Giant Banana Suckers">
+    <h3>Hybrid Giant Banana Suckers</h3>
+    <div class="meta">Large, healthy banana suckers</div>
+    <div class="price">₦2,000</div>
+    Quantity: <input class="qty" type="number" min="1" value="1" data-id="103" style="margin:8px 0;">
+    <button class="add-to-cart" data-id="103" style="margin-top:6px">Add to Cart 🛒</button>
+    <button class="buy-now" data-id="103" style="margin-top:6px">Buy Now</button>
+  </div>
+
+</div>
     </div>
   </section>
 
@@ -235,7 +271,12 @@ const PRODUCTS = [
   {id:5, name:'Vegetable Seeds', price:15000, img:'images/vegetables.JPG', cat:'seeds', note:'Vegetable seeds are young plants grown for transplanting, ensuring faster growth, higher yield, and healthy crops.'},
   {id:6, name:'NPK Fertilizers', price:65000, img:'images/fertilizer.JPG', cat:'fertilizer', note:'NPK fertilizer is a balanced plant nutrient containing Nitrogen, Phosphorus, and Potassium, essential for healthy growth, high yield, and strong crops.'}
 ];
-
+// NEW PRODUCTS
+PRODUCTS.push(
+  {id:7, name:'Hybrid Pineapple Sucker', price:1800, img:'images/hybrid_pineapple.JPG', cat:'seedlings', note:'Healthy fruit seedlings'},
+  {id:8, name:'Giant Hybrid Cocoa Seedlings', price:2500, img:'images/giant_cocoa.JPG', cat:'seedlings', note:'High yield cocoa seedlings'},
+  {id:9, name:'Hybrid Giant Banana Suckers', price:2000, img:'images/giant_banana.JPG', cat:'suckers', note:'Large, healthy banana suckers'}
+);
 /* ---------- Helpers ---------- */
 function formatN(n){ return '₦' + n.toLocaleString(); }
 
