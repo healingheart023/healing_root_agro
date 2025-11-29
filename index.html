@@ -384,7 +384,7 @@ document.getElementById('checkoutPay').addEventListener('click', function(){
   if(gw === null) return;
   if(gw.toUpperCase() === 'PAYSTACK'){
     // PAYSTACK: Insert your PUBLIC KEY below and implement backend verification for production.
-    const paystackPublicKey = 'PAYSTACK_PUBLIC_KEY_HERE';
+    const paystackPublicKey = 'pk_live_5983ea4d5d6ba95e21e715a9627178436844cb95';
     const email = prompt('Enter customer email for payment (used by gateway):', 'customer@example.com') || 'customer@example.com';
     const handler = window.payWithPaystack || null;
     if(!paystackPublicKey || paystackPublicKey.includes('PAYSTACK_PUBLIC_KEY_HERE')){
