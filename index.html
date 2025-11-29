@@ -1,41 +1,111 @@
-<!-- Hero Image -->
-<div class="hero">
-    <img src="images/farm-hero.JPG" alt="Farm Hero Image" style="width:100%; height:auto; border-radius:10px;">
-</div>
+<section id="shop">
+    <h2>Shop Our Products</h2>
+    <div class="products-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <img src="images/cassava.JPG" alt="Cassava Stems">
+            <h3>tme 419 Cassava Stems</h3>
+            <p>₦1000 per bundle</p>
+            <label>Quantity:
+                <input type="number" min="1" value="1" class="qty" data-name="tme 419 Cassava Stems" data-price="1000">
+            </label>
+            <button class="add-to-cart" data-name="Cassava Stems" data-price="1000">Add to Cart 🛒</button>
+        </div>
 
-<!-- Products Section -->
-<section id="products">
-    <h2>Our Products</h2>
-    <div class="products-grid" style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px;">
-        <div class="product-card" style="text-align:center; max-width:250px; box-shadow:0 4px 8px rgba(0,0,0,0.2); border-radius:10px; padding:15px;">
-            <img src="images/cassava.JPG" alt="Cassava Stems" style="width:100%; border-radius:10px;">
-            <h3>Cassava Stems</h3>
-            <p>High-quality stems for maximum yield.</p>
-            <a href="https://wa.me/2349138938301" class="btn">Order on WhatsApp</a>
+        <!-- Product 2 -->
+        <div class="product-card">
+            <img src="images/plantain.JPG" alt="Hybrid Plantain Suckers">
+            <h3>Hybrid giant Plantain Suckers</h3>
+            <p>₦350 per suckers</p>
+            <label>Quantity:
+                <input type="number" min="1" value="1" class="qty" data-name="Plantain Suckers" data-price="350">
+            </label>
+            <button class="add-to-cart" data-name="Plantain Suckers" data-price="350">Add to Cart 🛒</button>
         </div>
-        <div class="product-card" style="text-align:center; max-width:250px; box-shadow:0 4px 8px rgba(0,0,0,0.2); border-radius:10px; padding:15px;">
-            <img src="images/plantain.JPG" alt="Hybrid Plantain Suckers" style="width:100%; border-radius:10px;">
-            <h3>Hybrid Plantain Suckers</h3>
-            <p>Premium suckers for fast-growing plantains.</p>
-            <a href="https://wa.me/2349138938301" class="btn">Order on WhatsApp</a>
-        </div>
-        <div class="product-card" style="text-align:center; max-width:250px; box-shadow:0 4px 8px rgba(0,0,0,0.2); border-radius:10px; padding:15px;">
-            <img src="images/oilpalm.JPG" alt="Tenera Oil Palm Seedlings" style="width:100%; border-radius:10px;">
+
+        <!-- Product 3 -->
+        <div class="product-card">
+            <img src="images/oilpalm.jpg" alt="Tenera Oil Palm Seedlings">
             <h3>Tenera Oil Palm Seedlings</h3>
-            <p>Quality seedlings for sustainable farming.</p>
-            <a href="https://wa.me/2349138938301" class="btn">Order on WhatsApp</a>
-        </div>
-        <div class="product-card" style="text-align:center; max-width:250px; box-shadow:0 4px 8px rgba(0,0,0,0.2); border-radius:10px; padding:15px;">
-            <img src="images/coconut.JPG" alt="Coconut & Pineapple Seedlings" style="width:100%; border-radius:10px;">
-            <h3>Coconut & Pineapple Seedlings</h3>
-            <p>Healthy seedlings for fruit farms.</p>
-            <a href="https://wa.me/2349138938301" class="btn">Order on WhatsApp</a>
-        </div>
-        <div class="product-card" style="text-align:center; max-width:250px; box-shadow:0 4px 8px rgba(0,0,0,0.2); border-radius:10px; padding:15px;">
-            <img src="images/vegetables.JPG" alt="Okra & Vegetable Seeds" style="width:100%; border-radius:10px;">
-            <h3>Okra & Vegetable Seeds</h3>
-            <p>High-germination seeds for your farm.</p>
-            <a href="https://wa.me/2349138938301" class="btn">Order on WhatsApp</a>
+            <p>₦1000 per seedling</p>
+            <label>Quantity:
+                <input type="number" min="1" value="1" class="qty" data-name="Oil Palm Seedlings" data-price="1000">
+            </label>
+            <button class="add-to-cart" data-name="Oil Palm Seedlings" data-price="1000">Add to Cart 🛒</button>
         </div>
     </div>
+
+    <h3>Your Cart</h3>
+    <div id="cart">
+        <p>Your cart is empty.</p>
+    </div>
+    <button id="checkout" class="btn">Purchase via WhatsApp</button>
 </section>
+
+<script>
+// Cart array
+let cart = [];
+
+const cartDiv = document.getElementById('cart');
+const addButtons = document.querySelectorAll('.add-to-cart');
+const checkoutBtn = document.getElementById('checkout');
+
+// Add to Cart with quantity
+addButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const name = btn.dataset.name;
+        const price = parseInt(btn.dataset.price);
+        const qtyInput = btn.previousElementSibling.querySelector('input.qty');
+        const quantity = parseInt(qtyInput.value);
+
+        // Check if product is already in cart
+        const existing = cart.find(item => item.name === name);
+        if(existing){
+            existing.quantity += quantity;
+        } else {
+            cart.push({name, price, quantity});
+        }
+
+        updateCart();
+    });
+});
+
+// Update Cart Display
+function updateCart(){
+    if(cart.length === 0){
+        cartDiv.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+    }
+
+    let html = "<ul>";
+    let total = 0;
+    cart.forEach((item,index)=>{
+        html += `<li>${item.name} - ₦${item.price} x ${item.quantity} = ₦${item.price * item.quantity} 
+        <button onclick="removeItem(${index})">Remove</button></li>`;
+        total += item.price * item.quantity;
+    });
+    html += `</ul><p><strong>Total: ₦${total}</strong></p>`;
+    cartDiv.innerHTML = html;
+}
+
+// Remove item from cart
+function removeItem(index){
+    cart.splice(index,1);
+    updateCart();
+}
+
+// WhatsApp Checkout
+checkoutBtn.addEventListener('click',()=>{
+    if(cart.length === 0){ alert("Your cart is empty!"); return; }
+
+    let message = "Hello! I want to purchase:\n";
+    let total = 0;
+    cart.forEach(item=>{
+        message += `- ${item.name} x ${item.quantity} = ₦${item.price * item.quantity}\n`;
+        total += item.price * item.quantity;
+    });
+    message += `Total: ₦${total}`;
+    const url = `https://wa.me/2349138938301?text=${encodeURIComponent(message)}`;
+    window.open(url,'_blank');
+});
+</script>
